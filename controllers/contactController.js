@@ -1,13 +1,12 @@
 
-
-const getContact = (req,res)=>{
+const getContact = async (req,res)=>{
     res.status(200).json({message: "Get all contacts"});
 }
 
-const createContact = (req,res)=>{
+const createContact = async (req,res)=>{
     console.log("Request body: ",req.body);
     const {name, email, mobile} = req.body;
-    if(!name||email||mobile){
+    if(!name||!email||!mobile){
         res.status(400);
         throw new Error("All fields are mandatory!")
     }
