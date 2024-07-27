@@ -1,39 +1,42 @@
 const { constants } = require("../constants");
 
 const errorHandler = (err, req, res, next) => {
-   
-    const statusCode = err.statusCode;
 
-    // Set response status code
-    err.status(statusCode);
+    const statusCode = res.statusCode;
+    let title;
+
+    switch (statusCode) {
+        case constants.VALIDATION_ERROR:
+            title = "Validation Failed";
+            break;
+        case constants.NOT_FOUND:
+            title = "Not Found";
+            break;
+        case constants.FORBIDDEN:
+            title = "Forbidden";
+            break;
+        case constants.UNAUTHORISED:
+            title = "Unauthorized";
+            break;
+        case constants.SERVER_ERROR:
+            title = "Server Error";
+            break;
+        default:
+            title = "Unknown Error";
+            break;
+    }
 
     // Define error response structure
     const errorResponse = {
-        title: getErrorTitle(statusCode),
+        title: title,
         message: err.message,
         stackTrace: err.stack
     };
 
-    // Send JSON response
-    res.json(errorResponse);
-};
-
-// Function to determine error title based on status code
-const getErrorTitle = (statusCode) => {
-    switch (statusCode) {
-        case constants.VALIDATION_ERROR:
-            return "Validation Failed";
-        case constants.NOT_FOUND:
-            return "Not Found";
-        case constants.FORBIDDEN:
-            return "Forbidden";
-        case constants.UNAUTHORISED:
-            return "Unauthorized";
-        case constants.SERVER_ERROR:
-            return "Server Error";
-        default:
-            return "No Error";
-    }
+    // Send JSON response with the appropriate status code
+    res.json(errorResponse); 
+    res.status(statusCode);
+    
 };
 
 module.exports = errorHandler;
