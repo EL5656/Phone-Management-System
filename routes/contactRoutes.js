@@ -8,6 +8,7 @@ const {
     deleteContanct
 } = require("../controllers/contactController")
 
+//API Endpoint
 router.route("/").get(getContact).post(createContact)
 
 router.route("/:id").get(getContactById).put(updateContact).delete(deleteContanct)
