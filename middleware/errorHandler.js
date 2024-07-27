@@ -1,49 +1,39 @@
 const { constants } = require("../constants");
 
 const errorHandler = (err, req, res, next) => {
-    const statusCode = res.statusCode!==200 ? res.statusCode : 500;
+   
+    const statusCode = err.statusCode;
 
+    // Set response status code
+    err.status(statusCode);
+
+    // Define error response structure
+    const errorResponse = {
+        title: getErrorTitle(statusCode),
+        message: err.message,
+        stackTrace: err.stack
+    };
+
+    // Send JSON response
+    res.json(errorResponse);
+};
+
+// Function to determine error title based on status code
+const getErrorTitle = (statusCode) => {
     switch (statusCode) {
         case constants.VALIDATION_ERROR:
-            res.json({
-                title: "Validation Failed",
-                message: err.message,
-                stackTrace: err.stack
-            });
-            break;
+            return "Validation Failed";
         case constants.NOT_FOUND:
-            res.json({
-                title: "Not Found",
-                message: err.message,
-                stackTrace: err.stack
-            });
-            break;
+            return "Not Found";
         case constants.FORBIDDEN:
-            res.json({
-                title: "Forbidden",
-                message: err.message,
-                stackTrace: err.stack
-            });
-            break;
+            return "Forbidden";
         case constants.UNAUTHORISED:
-            res.json({
-                title: "Unauthorised",
-                message: err.message,
-                stackTrace: err.stack
-            });
-            break;
+            return "Unauthorized";
         case constants.SERVER_ERROR:
-            res.json({
-                title: "Server Error",
-                message: err.message,
-                stackTrace: err.stack
-            });
-            break;
+            return "Server Error";
         default:
-            console.log("No error");
-            break;
+            return "No Error";
     }
-
-}
+};
 
 module.exports = errorHandler;
