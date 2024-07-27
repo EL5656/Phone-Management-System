@@ -22,7 +22,7 @@ const errorHandler = (err, req, res, next) => {
             title = "Server Error";
             break;
         default:
-            title = "Unknown Error";
+            title = "No Error";
             break;
     }
 

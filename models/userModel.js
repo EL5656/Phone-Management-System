@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const contactSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
     username: {
         type: String,
         required: [true, "Please add the user name"]
@@ -23,3 +23,5 @@ const contactSchema = mongoose.Schema({
         timestamps: true,
     }
 )
+
+module.exports=mongoose.model("User", userSchema);

@@ -7,10 +7,11 @@ const {
     updateContact,
     deleteContanct
 } = require("../controllers/contactController")
+const validateToken = require('../middleware/validateTokenHandler');
 
 //API Endpoint
-router.route("/").get(getContact).post(createContact)
-
-router.route("/:id").get(getContactById).put(updateContact).delete(deleteContanct)
+router.use(validateToken);
+router.route("/").get(getContact).post(createContact);
+router.route("/:id").get(getContactById).put(updateContact).delete(deleteContanct);
 
 module.exports = router;
