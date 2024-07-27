@@ -4,3 +4,6 @@ This project was originally created by Dipesh Malvia (https://github.com/dmalvia
 ## Modifications
 - Slight amendment for running app due to possible updates in VSC accross year
 - Customise data column based on requirement
+
+## Objective
+- For learning to build Nodejs backend app in a proper way
