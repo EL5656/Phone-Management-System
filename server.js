@@ -2,9 +2,13 @@ const express = require("express");
 const dotenv = require("dotenv").config();
 const errorHandler = require("./middleware/errorHandler");
 const connectDb = require('./config/dbConnection');
+const cors = require('cors');
 
 connectDb();
 const app=express();
+app.use(cors({
+    origin: 'http://localhost:3000' // Allow requests only from this origin
+  }));
 
 const port = process.env.PORT;
 
